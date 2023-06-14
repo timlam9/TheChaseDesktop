@@ -23,7 +23,7 @@ fun BoardContent(
 }
 
 private fun ChaseBox.getTitle(state: ChaseState) = when (type) {
-    RowType.CHASER_HEAD -> state.chaserName
-    RowType.PLAYER_HEAD -> state.playerName
+    RowType.CHASER_HEAD -> state.chaser.name
+    RowType.PLAYER_HEAD -> state.player.name
     else -> ""
 }

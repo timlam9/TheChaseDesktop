@@ -7,5 +7,5 @@ enum class RowType {
     PLAYER,
     PLAYER_HEAD,
     EMPTY,
-    HOME
+    BANK
 }

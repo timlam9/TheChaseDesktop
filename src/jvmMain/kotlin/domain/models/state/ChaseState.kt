@@ -12,12 +12,20 @@ internal val initialList = mutableListOf(
     ChaseBox(position = 5, type = RowType.PLAYER),
     ChaseBox(position = 6, type = RowType.PLAYER),
     ChaseBox(position = 7, type = RowType.PLAYER),
-    ChaseBox(position = 8, type = RowType.HOME),
+    ChaseBox(position = 8, type = RowType.BANK),
 )
 
 data class ChaseState(
     val board: List<ChaseBox> = initialList,
     val gameStatus: GameStatus = GameStatus.SETUP,
-    val chaserName: String = "",
-    val playerName: String = "",
+    val chaser: GamePlayer = GamePlayer(
+        position = 0,
+        name = "Chaser",
+        type = PlayerType.CHASER
+    ),
+    val player: GamePlayer = GamePlayer(
+        position = 3,
+        name = "Player",
+        type = PlayerType.PLAYER
+    )
 )

@@ -78,8 +78,8 @@ class GameBrain {
         return chaseState.copy(
             board = initialList,
             gameStatus = GameStatus.PLAYING,
-            chaserName = chaserName,
-            playerName = playerName
+            chaser = chaseState.chaser.copy(name = chaserName),
+            player = chaseState.player.copy(name = playerName)
         )
     }
 

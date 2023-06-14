@@ -71,7 +71,7 @@ fun BoardRow(
                     RowType.PLAYER -> Color.Blue
                     RowType.PLAYER_HEAD -> Color.Blue
                     RowType.EMPTY -> Color.Gray
-                    RowType.HOME -> Color.Black
+                    RowType.BANK -> Color.Black
                 }
 
                 onDrawBehind {
@@ -107,7 +107,7 @@ fun BoardRow(
                 )
             }
 
-            RowType.HOME -> {
+            RowType.BANK -> {
                 Text(
                     text = "HOME",
                     style = MaterialTheme.typography.h4.copy(color = Color.White, fontWeight = FontWeight.Bold),
