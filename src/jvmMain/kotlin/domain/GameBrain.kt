@@ -1,5 +1,11 @@
 package domain
 
+import domain.models.state.ChaseState
+import domain.models.state.GameStatus
+import domain.models.box.ChaseBox
+import domain.models.box.RowType
+import domain.models.state.initialList
+
 private const val HOME_POSITION = 8
 
 class GameBrain {

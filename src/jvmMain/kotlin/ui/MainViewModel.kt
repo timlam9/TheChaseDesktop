@@ -1,11 +1,13 @@
+package ui
+
 import data.ClientBuilder
 import data.Repository
 import data.Test
 import data.WebSocket
-import domain.ChaseBox
-import domain.ChaseState
+import domain.models.box.ChaseBox
+import domain.models.state.ChaseState
 import domain.GameBrain
-import domain.RowType
+import domain.models.box.RowType
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

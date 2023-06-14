@@ -1,4 +1,7 @@
-package domain
+package domain.models.state
+
+import domain.models.box.ChaseBox
+import domain.models.box.RowType
 
 internal val initialList = mutableListOf(
     ChaseBox(position = 0, type = RowType.CHASER_HEAD),

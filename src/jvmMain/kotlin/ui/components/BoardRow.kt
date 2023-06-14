@@ -1,8 +1,7 @@
-package components
+package ui.components
 
 import androidx.compose.foundation.ExperimentalFoundationApi
-import domain.RowType
-import androidx.compose.foundation.clickable
+import domain.models.box.RowType
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon

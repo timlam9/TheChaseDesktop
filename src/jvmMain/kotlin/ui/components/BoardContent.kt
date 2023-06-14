@@ -1,9 +1,9 @@
-package components
+package ui.components
 
-import domain.ChaseState
+import domain.models.state.ChaseState
 import androidx.compose.runtime.Composable
-import domain.ChaseBox
-import domain.RowType
+import domain.models.box.ChaseBox
+import domain.models.box.RowType
 
 @Composable
 fun BoardContent(

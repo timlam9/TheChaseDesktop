@@ -1,4 +1,4 @@
-package domain
+package domain.models.box
 
 data class ChaseBox(
     val position: Int,
