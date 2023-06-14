@@ -4,15 +4,12 @@ import data.models.Question
 import data.models.User
 import io.ktor.client.*
 import io.ktor.client.call.*
-import io.ktor.client.engine.cio.*
-import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.request.*
 import io.ktor.client.request.forms.*
 import io.ktor.http.*
-import io.ktor.serialization.kotlinx.json.*
-import kotlinx.serialization.json.Json
 
-const val url = "http://192.168.9.95:8080"
+const val url = "http://192.168.1.101:8080"
+//const val url = "http://192.168.9.95:8080"
 const val version = "/v1"
 
 const val questionsEndpoint = "/questions"
@@ -58,16 +55,3 @@ class Repository(private val client: HttpClient = ClientBuilder.defaultHttpClien
     }
 }
 
-object ClientBuilder {
-
-    val defaultHttpClient = HttpClient(CIO) {
-        install(ContentNegotiation) {
-            json(
-                Json {
-                    prettyPrint = true
-                    isLenient = true
-                }
-            )
-        }
-    }
-}

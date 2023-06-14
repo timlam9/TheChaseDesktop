@@ -26,13 +26,13 @@ kotlin {
         val jvmMain by getting {
             dependencies {
                 implementation(compose.desktop.currentOs)
-                implementation ("androidx.compose.ui:ui:1.0.0")
+                implementation("androidx.compose.ui:ui:1.0.0")
 
                 val lifecycleVersion = "2.6.1"
-                implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
-                implementation ("androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycleVersion")
-                implementation ("androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleVersion")
-                implementation ("androidx.lifecycle:lifecycle-runtime-compose:$lifecycleVersion")
+                implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
+                implementation("androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycleVersion")
+                implementation("androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleVersion")
+                implementation("androidx.lifecycle:lifecycle-runtime-compose:$lifecycleVersion")
 
                 implementation("uk.co.caprica:vlcj:4.8.2")
 
@@ -41,6 +41,7 @@ kotlin {
                 implementation("io.ktor:ktor-client-serialization:2.3.1")
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.0")
                 implementation("io.ktor:ktor-client-auth:2.3.1")
+                implementation("io.ktor:ktor-serialization-gson:2.3.1")
                 implementation("io.ktor:ktor-serialization-kotlinx-json:2.3.1")
                 implementation("io.ktor:ktor-client-content-negotiation:2.3.1")
 
@@ -49,6 +50,8 @@ kotlin {
                 implementation("io.ktor:ktor-serialization-kotlinx-cbor:2.3.1")
                 implementation("io.ktor:ktor-serialization-kotlinx-protobuf:2.3.1")
                 implementation("io.ktor:ktor-client-logging:2.3.1")
+
+                implementation("io.ktor:ktor-client-websockets:2.3.1")
             }
         }
         val jvmTest by getting

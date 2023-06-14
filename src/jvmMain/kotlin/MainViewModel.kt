@@ -1,13 +1,34 @@
-import domain.*
-import domain.checkForGameOver
+import data.ClientBuilder
+import data.Repository
+import data.Test
+import data.WebSocket
+import domain.ChaseBox
+import domain.ChaseState
+import domain.GameBrain
+import domain.RowType
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 
-class MainViewModel {
+class MainViewModel(private val dispatcher: CoroutineDispatcher = Dispatchers.IO) {
+    private val brain = GameBrain()
+    private val client = ClientBuilder.defaultHttpClient
+    private val repository: Repository = Repository(client = client)
+    private val webSocket: WebSocket = WebSocket(client = client, repository = repository)
+
     private var _chaseState = MutableStateFlow(ChaseState())
     val chaseState: StateFlow<ChaseState> = _chaseState.asStateFlow()
+
+    init {
+        CoroutineScope(dispatcher).launch {
+            val token = repository.login("board@gmail.com", "password")
+        }
+    }
 
     fun onChaserClick() {
         val chaserBox = _chaseState.value.board.first { it.type == RowType.CHASER_HEAD }
@@ -19,91 +40,38 @@ class MainViewModel {
         onChaseBoxClick(playerBox)
     }
 
-    fun onResetClick() {
-        _chaseState.update {
-            it.copy(
-                board = initialList,
-                gameStatus = GameStatus.SETUP
-            )
-        }
-    }
-
     fun onChaseBoxClick(chaseBox: ChaseBox) {
-        val board = _chaseState.value.board
-        val newList = _chaseState.value.board.toMutableList()
-
-        when (chaseBox.type) {
-            RowType.CHASER_HEAD -> {
-                val currentPosition = chaseBox.position
-                val nextPosition = chaseBox.position + 1
-                val playerPosition = board.first { it.type == RowType.PLAYER_HEAD }.position
-
-                newList[currentPosition] = ChaseBox(position = currentPosition, type = RowType.CHASER)
-                newList[nextPosition] = ChaseBox(position = nextPosition, type = RowType.CHASER_HEAD)
-
-                _chaseState.update {
-                    it.copy(gameStatus = playerPosition.checkForGameOver(nextPosition))
-                }
-            }
-
-            RowType.PLAYER_HEAD -> {
-                val currentPosition = chaseBox.position
-                val nextPosition = chaseBox.position + 1
-                val chaserPosition = board.first { it.type == RowType.CHASER_HEAD }.position
-
-                newList[currentPosition] = ChaseBox(position = currentPosition, type = RowType.EMPTY)
-                newList[nextPosition] = ChaseBox(position = nextPosition, type = RowType.PLAYER_HEAD)
-
-                _chaseState.update {
-                    it.copy(gameStatus = nextPosition.checkForGameOver(chaserPosition))
-                }
-            }
-
-            else -> Unit
+        val newState = when (chaseBox.type) {
+            RowType.CHASER_HEAD -> brain.moveChaser(_chaseState.value, chaseBox)
+            RowType.PLAYER_HEAD -> brain.movePlayer(_chaseState.value, chaseBox)
+            else -> _chaseState.value
         }
 
-        _chaseState.update { it.copy(board = newList) }
-    }
-
-    fun onSetupClick(chaserName: String, playerName: String) {
-        _chaseState.update {
-            it.copy(
-                board = initialList,
-                gameStatus = GameStatus.PLAYING,
-                chaserName = chaserName,
-                playerName = playerName
-            )
-        }
+        _chaseState.update { newState }
     }
 
     fun onChaseBoxLongClick(chaseBox: ChaseBox) {
-        val board = _chaseState.value.board
-        val newList = _chaseState.value.board.toMutableList()
-
-        when (chaseBox.type) {
-            RowType.CHASER_HEAD -> {
-                val currentPosition = chaseBox.position
-                val prePosition = chaseBox.position - 1
-
-                if(currentPosition <= 0) return
-
-                newList[currentPosition] = ChaseBox(position = currentPosition, type = RowType.EMPTY)
-                newList[prePosition] = ChaseBox(position = prePosition, type = RowType.CHASER_HEAD)
-            }
-
-            RowType.PLAYER_HEAD -> {
-                val currentPosition = chaseBox.position
-                val prePosition = chaseBox.position - 1
-                val chaserPosition = board.first { it.type == RowType.CHASER_HEAD }.position
-
-                if (prePosition <= chaserPosition) return
-
-                newList[currentPosition] = ChaseBox(position = currentPosition, type = RowType.PLAYER)
-                newList[prePosition] = ChaseBox(position = prePosition, type = RowType.PLAYER_HEAD)
-            }
-            else -> Unit
+        val newState = when (chaseBox.type) {
+            RowType.CHASER_HEAD -> brain.moveChaserBack(_chaseState.value, chaseBox)
+            RowType.PLAYER_HEAD -> brain.movePlayerBack(_chaseState.value, chaseBox)
+            else -> _chaseState.value
         }
 
-        _chaseState.update { it.copy(board = newList) }
+        _chaseState.update { newState }
+    }
+
+    fun onSetupClick(chaserName: String, playerName: String) {
+        CoroutineScope(dispatcher).launch {
+            webSocket.sendMessage(Test(chaserName + playerName))
+        }
+        _chaseState.update {
+            brain.setupGame(it, chaserName, playerName)
+        }
+    }
+
+    fun onResetClick() {
+        _chaseState.update {
+            brain.resetGame(it)
+        }
     }
 }

@@ -15,7 +15,6 @@ import androidx.compose.ui.window.singleWindowApplication
 import components.BoardContent
 import components.GameOverContent
 import components.SetupContent
-import data.Repository
 import domain.GameStatus
 import java.util.*
 
@@ -23,8 +22,6 @@ private val SCREEN_WIDTH = 600.dp
 private val SCREEN_HEIGHT = 900.dp
 
 private val viewModel = MainViewModel()
-
-private val repository: Repository = Repository()
 
 @OptIn(ExperimentalComposeUiApi::class)
 fun main() = singleWindowApplication(
@@ -61,15 +58,6 @@ fun main() = singleWindowApplication(
     }
 
     LaunchedEffect(Unit) {
-        val token = repository.login("board@gmail.com","password")
-        println("Token: $token")
-
-        val users = repository.getUsers()
-        println("Users: $users")
-
-        val questions = repository.getQuestionsResponse()
-        println("Questions: $questions")
-
         println(window.insets)
     }
 }
