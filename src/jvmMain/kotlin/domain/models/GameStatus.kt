@@ -1,4 +1,4 @@
-package domain.models.state
+package domain.models
 
 enum class GameStatus {
 

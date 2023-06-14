@@ -12,7 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import domain.models.state.GameStatus
+import domain.models.GameStatus
 
 @Composable
 fun GameOverContent(gameStatus: GameStatus, onClick: () -> Unit) {

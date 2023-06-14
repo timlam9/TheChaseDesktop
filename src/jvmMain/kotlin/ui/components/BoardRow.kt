@@ -1,7 +1,7 @@
 package ui.components
 
 import androidx.compose.foundation.ExperimentalFoundationApi
-import domain.models.box.RowType
+import domain.models.ChaseBox.RowType
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
@@ -109,7 +109,7 @@ fun BoardRow(
 
             RowType.BANK -> {
                 Text(
-                    text = "HOME",
+                    text = type.name,
                     style = MaterialTheme.typography.h4.copy(color = Color.White, fontWeight = FontWeight.Bold),
                 )
             }

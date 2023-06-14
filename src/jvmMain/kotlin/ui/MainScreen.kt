@@ -8,9 +8,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import domain.models.box.ChaseBox
-import domain.models.state.ChaseState
-import domain.models.state.GameStatus
+import domain.models.ChaseBox
+import domain.models.ChaseState
+import domain.models.GameStatus
 import ui.components.BoardContent
 import ui.components.GameOverContent
 import ui.components.SetupContent
@@ -25,7 +25,6 @@ fun MainScreen(
     onResetClick: () -> Unit,
 ) {
     MaterialTheme {
-
         Column(
             modifier = Modifier.fillMaxSize().padding(20.dp),
             verticalArrangement = Arrangement.Center,

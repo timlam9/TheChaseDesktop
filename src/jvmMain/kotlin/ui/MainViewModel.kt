@@ -4,10 +4,10 @@ import data.ClientBuilder
 import data.Repository
 import data.Test
 import data.WebSocket
-import domain.models.box.ChaseBox
-import domain.models.state.ChaseState
+import domain.models.ChaseBox
+import domain.models.ChaseState
 import domain.GameBrain
-import domain.models.box.RowType
+import domain.models.ChaseBox.RowType
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

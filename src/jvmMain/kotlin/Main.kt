@@ -12,7 +12,7 @@ import ui.MainScreen
 import ui.MainViewModel
 import java.util.*
 
-private val SCREEN_WIDTH = 600.dp
+private val SCREEN_WIDTH = 1200.dp
 private val SCREEN_HEIGHT = 900.dp
 
 private val viewModel = MainViewModel()

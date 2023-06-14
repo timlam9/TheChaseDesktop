@@ -1,10 +1,10 @@
 package domain
 
-import domain.models.state.ChaseState
-import domain.models.state.GameStatus
-import domain.models.box.ChaseBox
-import domain.models.box.RowType
-import domain.models.state.initialList
+import domain.models.ChaseState
+import domain.models.GameStatus
+import domain.models.ChaseBox
+import domain.models.ChaseBox.RowType
+import domain.models.initialList
 
 private const val HOME_POSITION = 8
 
@@ -77,9 +77,7 @@ class GameBrain {
     fun setupGame(chaseState: ChaseState, chaserName: String, playerName: String): ChaseState {
         return chaseState.copy(
             board = initialList,
-            gameStatus = GameStatus.PLAYING,
-            chaser = chaseState.chaser.copy(name = chaserName),
-            player = chaseState.player.copy(name = playerName)
+            gameStatus = GameStatus.PLAYING
         )
     }
 

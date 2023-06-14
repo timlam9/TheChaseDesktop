@@ -1,9 +1,20 @@
 package ui.components
 
-import domain.models.state.ChaseState
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Card
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import domain.models.box.ChaseBox
-import domain.models.box.RowType
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
+import domain.models.ChaseBox
+import domain.models.ChaseState
+import domain.models.GameQuestion
+import domain.models.GameQuestionOption
+import domain.models.GameQuestionOption.SelectedBy.*
 
 @Composable
 fun BoardContent(
@@ -11,19 +22,72 @@ fun BoardContent(
     onClick: (chaseBox: ChaseBox) -> Unit,
     onLongClick: (chaseBox: ChaseBox) -> Unit
 ) {
-    state.board.forEach { chaseBox ->
-        BoardRow(
-            position = chaseBox.position,
-            type = chaseBox.type,
-            title = chaseBox.getTitle(state),
-            onClick = { onClick(chaseBox) },
-            onLongClick = { onLongClick(chaseBox) }
+    Row(modifier = Modifier.fillMaxSize().padding(20.dp)) {
+        Board(
+            state = state,
+            onClick = onClick,
+            onLongClick = onLongClick
         )
+        QuestionSection(question = state.currentQuestion)
     }
 }
 
-private fun ChaseBox.getTitle(state: ChaseState) = when (type) {
-    RowType.CHASER_HEAD -> state.chaser.name
-    RowType.PLAYER_HEAD -> state.player.name
-    else -> ""
+@Composable
+fun Board(
+    state: ChaseState,
+    onClick: (chaseBox: ChaseBox) -> Unit,
+    modifier: Modifier = Modifier,
+    onLongClick: (chaseBox: ChaseBox) -> Unit
+) {
+    Column(modifier = modifier.width(560.dp)) {
+        state.board.forEach { chaseBox ->
+            BoardRow(
+                position = chaseBox.position,
+                type = chaseBox.type,
+                title = chaseBox.type.title,
+                onClick = { onClick(chaseBox) },
+                onLongClick = { onLongClick(chaseBox) }
+            )
+        }
+    }
+}
+
+@Composable
+fun QuestionSection(
+    question: GameQuestion,
+    modifier: Modifier = Modifier,
+) = with(question) {
+    Column(modifier.fillMaxSize()) {
+        Text(text = title, style = MaterialTheme.typography.h4, modifier = Modifier)
+        Spacer(modifier = Modifier.height(40.dp))
+        options.forEach {
+            OptionCard(it)
+        }
+    }
+}
+
+@Composable
+fun OptionCard(question: GameQuestionOption) = with(question) {
+    val paddingModifier = Modifier
+        .fillMaxWidth()
+        .padding(horizontal = 20.dp, vertical = 6.dp)
+    val borderModifier = when (question.selectedBy) {
+        CHASER -> paddingModifier.border(width = 4.dp, color = Color.Red, shape = RoundedCornerShape(4))
+        PLAYER -> paddingModifier.border(width = 4.dp, color = Color.Blue, shape = RoundedCornerShape(4))
+        BOTH -> paddingModifier
+            .border(width = 4.dp, color = Color.Blue, shape = RoundedCornerShape(4))
+            .padding(2.dp)
+            .border(width = 6.dp, color = Color.Red, shape = RoundedCornerShape(4))
+        NONE -> paddingModifier
+    }
+    Card(
+        elevation = 2.dp,
+        modifier = borderModifier
+    ) {
+        Text(
+            text = "${position.name}. $title",
+            modifier = Modifier.padding(30.dp),
+            style = MaterialTheme.typography.h5
+        )
+    }
 }
