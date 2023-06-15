@@ -1,5 +1,6 @@
 package ui.components
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -61,33 +62,72 @@ fun QuestionSection(
         Text(text = title, style = MaterialTheme.typography.h4, modifier = Modifier)
         Spacer(modifier = Modifier.height(40.dp))
         options.forEach {
-            OptionCard(it)
+            OptionCard(it, showRightAnswer)
         }
+        PlayersRow(
+            showPlayer = options.map { it.selectedBy }.contains(PLAYER),
+            showChaser = options.map { it.selectedBy }.contains(CHASER)
+        )
     }
 }
 
 @Composable
-fun OptionCard(question: GameQuestionOption) = with(question) {
+fun OptionCard(question: GameQuestionOption, showRightAnswer: Boolean) = with(question) {
     val paddingModifier = Modifier
         .fillMaxWidth()
         .padding(horizontal = 20.dp, vertical = 6.dp)
+
     val borderModifier = when (question.selectedBy) {
         CHASER -> paddingModifier.border(width = 4.dp, color = Color.Red, shape = RoundedCornerShape(4))
-        PLAYER -> paddingModifier.border(width = 4.dp, color = Color.Blue, shape = RoundedCornerShape(4))
-        BOTH -> paddingModifier
-            .border(width = 4.dp, color = Color.Blue, shape = RoundedCornerShape(4))
-            .padding(2.dp)
-            .border(width = 6.dp, color = Color.Red, shape = RoundedCornerShape(4))
-        NONE -> paddingModifier
+        else -> paddingModifier
     }
+
     Card(
         elevation = 2.dp,
-        modifier = borderModifier
+        modifier = borderModifier,
+        backgroundColor = when {
+            showRightAnswer && isRightAnswer -> Color.Green
+            question.selectedBy == PLAYER -> Color.Blue
+            else -> MaterialTheme.colors.surface
+        }
     ) {
         Text(
             text = "${position.name}. $title",
             modifier = Modifier.padding(30.dp),
             style = MaterialTheme.typography.h5
         )
+    }
+}
+
+@Composable
+fun PlayersRow(showPlayer: Boolean, showChaser: Boolean) {
+    Row(modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween) {
+        AnimatedVisibility(showPlayer) {
+            Card(
+                elevation = 2.dp,
+                modifier = Modifier.padding(8.dp),
+                backgroundColor = Color.Blue
+            ) {
+                Text(
+                    text = "Player",
+                    modifier = Modifier.padding(30.dp),
+                    style = MaterialTheme.typography.h5
+                )
+            }
+        }
+        AnimatedVisibility(showChaser) {
+            Card(
+                elevation = 2.dp,
+                modifier = Modifier.padding(8.dp),
+                backgroundColor = Color.Red
+            ) {
+                Text(
+                    text = "Chaser",
+                    modifier = Modifier.padding(30.dp),
+                    style = MaterialTheme.typography.h5
+                )
+            }
+        }
     }
 }

@@ -3,7 +3,8 @@ package domain.models
 data class GameQuestionOption(
     val title: String,
     val position: Position,
-    val selectedBy: SelectedBy
+    val selectedBy: SelectedBy,
+    val isRightAnswer: Boolean
 ) {
 
     enum class Position {
@@ -15,7 +16,6 @@ data class GameQuestionOption(
     enum class SelectedBy {
         CHASER,
         PLAYER,
-        BOTH,
         NONE
     }
 }

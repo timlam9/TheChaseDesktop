@@ -25,18 +25,22 @@ data class ChaseState(
             GameQuestionOption(
                 title = "Η φάβα έχει 5 λάκκους",
                 position = Position.A,
-                selectedBy = SelectedBy.PLAYER
+                selectedBy = SelectedBy.PLAYER,
+                isRightAnswer = false
             ),
             GameQuestionOption(
                 title = "Η φάβα έχει 50 λάκκους",
                 position = Position.B,
-                selectedBy = SelectedBy.NONE
+                selectedBy = SelectedBy.NONE,
+                isRightAnswer = true
             ),
             GameQuestionOption(
                 title = "Η φάβα έχει 500 λάκκους",
                 position = Position.C,
-                selectedBy = SelectedBy.CHASER
+                selectedBy = SelectedBy.CHASER,
+                isRightAnswer = false
             ),
-        )
+        ),
+        showRightAnswer = true,
     )
 )

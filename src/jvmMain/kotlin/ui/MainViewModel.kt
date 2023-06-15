@@ -2,8 +2,8 @@ package ui
 
 import data.ClientBuilder
 import data.Repository
-import data.Test
-import data.WebSocket
+import data.webSocket.Test
+import data.webSocket.WebSocket
 import domain.models.ChaseBox
 import domain.models.ChaseState
 import domain.GameBrain
