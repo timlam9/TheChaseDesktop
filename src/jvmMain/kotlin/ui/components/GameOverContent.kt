@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
 import domain.models.GameStatus
 
 @Composable
-fun GameOverContent(gameStatus: GameStatus, onClick: () -> Unit) {
+fun GameOverContent(gameStatus: GameStatus) {
     val text by remember(gameStatus) {
         mutableStateOf(
             when (gameStatus) {
@@ -43,7 +43,7 @@ fun GameOverContent(gameStatus: GameStatus, onClick: () -> Unit) {
         Spacer(modifier = Modifier.height(160.dp))
         Text(text, style = MaterialTheme.typography.h2.copy(color = color))
         Spacer(modifier = Modifier.size(40.dp))
-        Button(onClick = onClick) {
+        Button(onClick = {}) {
             Text("Next round")
         }
     }

@@ -24,17 +24,14 @@ fun main() = singleWindowApplication(
         if (it.type == KeyEventType.KeyDown && it.isCtrlPressed) {
             when (it.key) {
                 Key.R -> {
-                    viewModel.onResetClick()
                     true
                 }
 
                 Key.C -> {
-                    viewModel.onChaserClick()
                     true
                 }
 
                 Key.P -> {
-                    viewModel.onPlayerClick()
                     true
                 }
 
@@ -48,13 +45,7 @@ fun main() = singleWindowApplication(
     Box(modifier = Modifier.size(width = SCREEN_WIDTH, height = SCREEN_HEIGHT)) {
         val state by viewModel.chaseState.collectAsState()
 
-        MainScreen(
-            state = state,
-            onClick = viewModel::onChaseBoxClick,
-            onLongClick = viewModel::onChaseBoxLongClick,
-            onSetupClick = viewModel::onSetupClick,
-            onResetClick = viewModel::onResetClick
-        )
+        MainScreen(state = state)
     }
 
     LaunchedEffect(Unit) {

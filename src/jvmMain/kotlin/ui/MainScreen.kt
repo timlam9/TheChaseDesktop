@@ -8,7 +8,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import domain.models.ChaseBox
 import domain.models.ChaseState
 import domain.models.GameStatus
 import ui.components.BoardContent
@@ -17,13 +16,7 @@ import ui.components.SetupContent
 
 @Composable
 @Preview
-fun MainScreen(
-    state: ChaseState,
-    onClick: (chaseBox: ChaseBox) -> Unit,
-    onLongClick: (chaseBox: ChaseBox) -> Unit,
-    onSetupClick: (String, String) -> Unit,
-    onResetClick: () -> Unit,
-) {
+fun MainScreen(state: ChaseState) {
     MaterialTheme {
         Column(
             modifier = Modifier.fillMaxSize().padding(20.dp),
@@ -33,17 +26,9 @@ fun MainScreen(
             Text("The Chase", style = MaterialTheme.typography.h4)
             Spacer(Modifier.size(20.dp))
             when (state.gameStatus) {
-                GameStatus.PLAYING -> BoardContent(
-                    state = state,
-                    onClick = onClick,
-                    onLongClick = onLongClick
-                )
-
-                GameStatus.SETUP -> SetupContent(onStartClick = onSetupClick)
-                else -> GameOverContent(
-                    gameStatus = state.gameStatus,
-                    onClick = onResetClick
-                )
+                GameStatus.PLAYING -> BoardContent(state = state)
+                GameStatus.SETUP -> SetupContent()
+                else -> GameOverContent(gameStatus = state.gameStatus)
             }
         }
         Spacer(Modifier.size(20.dp))

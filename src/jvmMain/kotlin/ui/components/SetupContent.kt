@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun SetupContent(onStartClick: (String, String) -> Unit) {
+fun SetupContent() {
     var chaser by remember { mutableStateOf("") }
     var player by remember { mutableStateOf("") }
 
@@ -25,7 +25,7 @@ fun SetupContent(onStartClick: (String, String) -> Unit) {
             player = it
         }
         Spacer(modifier = Modifier.size(20.dp))
-        Button(onClick = { onStartClick(chaser, player) }) {
+        Button(onClick = { }) {
             Text("Start")
         }
     }

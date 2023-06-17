@@ -18,17 +18,9 @@ import domain.models.GameQuestionOption
 import domain.models.GameQuestionOption.SelectedBy.*
 
 @Composable
-fun BoardContent(
-    state: ChaseState,
-    onClick: (chaseBox: ChaseBox) -> Unit,
-    onLongClick: (chaseBox: ChaseBox) -> Unit
-) {
+fun BoardContent(state: ChaseState) {
     Row(modifier = Modifier.fillMaxSize().padding(20.dp)) {
-        Board(
-            state = state,
-            onClick = onClick,
-            onLongClick = onLongClick
-        )
+        Board(state = state)
         QuestionSection(question = state.currentQuestion)
     }
 }
@@ -36,18 +28,14 @@ fun BoardContent(
 @Composable
 fun Board(
     state: ChaseState,
-    onClick: (chaseBox: ChaseBox) -> Unit,
     modifier: Modifier = Modifier,
-    onLongClick: (chaseBox: ChaseBox) -> Unit
 ) {
     Column(modifier = modifier.width(560.dp)) {
         state.board.forEach { chaseBox ->
             BoardRow(
                 position = chaseBox.position,
                 type = chaseBox.type,
-                title = chaseBox.type.title,
-                onClick = { onClick(chaseBox) },
-                onLongClick = { onLongClick(chaseBox) }
+                title = chaseBox.type.title
             )
         }
     }

@@ -1,8 +1,5 @@
 package ui.components
 
-import androidx.compose.foundation.ExperimentalFoundationApi
-import domain.models.ChaseBox.RowType
-import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
@@ -21,27 +18,21 @@ import androidx.compose.ui.graphics.drawscope.Fill
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import domain.models.ChaseBox.RowType
 
 private const val STROKE = 8f
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun BoardRow(
     position: Int,
     modifier: Modifier = Modifier,
     type: RowType = RowType.PLAYER,
     title: String = "",
-    onClick: () -> Unit,
-    onLongClick: () -> Unit,
 ) {
     Box(
         modifier = modifier
             .fillMaxWidth()
             .height(80.dp)
-            .combinedClickable(
-                onClick = onClick,
-                onLongClick = onLongClick,
-            )
             .drawWithCache {
                 val topSpace = (size.width / 10) + (position * 28f)
                 val bottomSpace = (size.width / 8) + (position * 28f)

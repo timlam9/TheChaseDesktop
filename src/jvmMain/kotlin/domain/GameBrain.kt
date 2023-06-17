@@ -4,7 +4,6 @@ import domain.models.ChaseState
 import domain.models.GameStatus
 import domain.models.ChaseBox
 import domain.models.ChaseBox.RowType
-import domain.models.initialList
 
 private const val HOME_POSITION = 8
 
@@ -76,14 +75,14 @@ class GameBrain {
 
     fun setupGame(chaseState: ChaseState, chaserName: String, playerName: String): ChaseState {
         return chaseState.copy(
-            board = initialList,
+            board = emptyList(),
             gameStatus = GameStatus.PLAYING
         )
     }
 
     fun resetGame(chaseState: ChaseState): ChaseState {
         return chaseState.copy(
-            board = initialList,
+            board = emptyList(),
             gameStatus = GameStatus.SETUP
         )
     }
