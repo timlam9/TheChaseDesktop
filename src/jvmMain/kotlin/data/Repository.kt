@@ -9,7 +9,6 @@ import io.ktor.client.request.forms.*
 import io.ktor.http.*
 
 const val url = "http://192.168.1.101:8080"
-//const val url = "http://192.168.9.95:8080"
 const val version = "/v1"
 
 const val questionsEndpoint = "/questions"
