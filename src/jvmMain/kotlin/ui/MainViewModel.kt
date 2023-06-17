@@ -29,6 +29,7 @@ class MainViewModel(private val dispatcher: CoroutineDispatcher = Dispatchers.IO
     init {
         CoroutineScope(dispatcher).launch {
             val token = repository.login("board@gmail.com", "password")
+            println("Token = $token")
         }
     }
 
