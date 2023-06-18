@@ -7,5 +7,7 @@ data class ChaseState(
         title = "",
         options = emptyList(),
         showRightAnswer = false,
+        showPlayerAnswer = false,
+        showChaserAnswer = false
     )
 )

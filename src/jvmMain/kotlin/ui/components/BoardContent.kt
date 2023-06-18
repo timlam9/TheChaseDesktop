@@ -49,7 +49,7 @@ fun QuestionSection(
         Text(text = title, style = MaterialTheme.typography.h4, modifier = Modifier)
         Spacer(modifier = Modifier.height(40.dp))
         options.forEach {
-            OptionCard(it, showRightAnswer)
+            OptionCard(it, showRightAnswer, showPlayerAnswer, showChaserAnswer)
         }
         PlayersRow(
             showPlayer = options.map { it.selectedBy }.contains(PLAYER) || options.map { it.selectedBy }.contains(BOTH),
@@ -59,14 +59,21 @@ fun QuestionSection(
 }
 
 @Composable
-fun OptionCard(question: GameQuestionOption, showRightAnswer: Boolean) = with(question) {
+fun OptionCard(
+    question: GameQuestionOption,
+    showRightAnswer: Boolean,
+    showPlayerAnswer: Boolean,
+    showChaserAnswer: Boolean
+) = with(question) {
+    println("BUG: $question")
+    
     val paddingModifier = Modifier
         .fillMaxWidth()
         .padding(horizontal = 20.dp, vertical = 6.dp)
 
-    val borderModifier = when (question.selectedBy) {
-        CHASER -> paddingModifier.border(width = 4.dp, color = Color.Red, shape = RoundedCornerShape(4))
-        BOTH -> paddingModifier.border(width = 4.dp, color = Color.Red, shape = RoundedCornerShape(4))
+    val borderModifier = when  {
+        (question.selectedBy == CHASER) && showChaserAnswer-> paddingModifier.border(width = 4.dp, color = Color.Red, shape = RoundedCornerShape(4))
+        (question.selectedBy == BOTH) && showChaserAnswer -> paddingModifier.border(width = 4.dp, color = Color.Red, shape = RoundedCornerShape(4))
         else -> paddingModifier
     }
 
@@ -75,8 +82,8 @@ fun OptionCard(question: GameQuestionOption, showRightAnswer: Boolean) = with(qu
         modifier = borderModifier,
         backgroundColor = when {
             showRightAnswer && isRightAnswer -> Color.Green
-            question.selectedBy == PLAYER -> Color.Blue
-            question.selectedBy == BOTH -> Color.Blue
+            (question.selectedBy == PLAYER) && showPlayerAnswer -> Color.Blue
+            (question.selectedBy == BOTH) && showPlayerAnswer -> Color.Blue
             else -> MaterialTheme.colors.surface
         }
     ) {
