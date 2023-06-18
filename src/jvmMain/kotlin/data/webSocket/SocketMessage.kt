@@ -9,8 +9,6 @@ sealed class SocketMessage {
         data class Connect(val type: String = "connect", val email: String) : OutBound()
 
         data class Disconnect(val type: String = "disconnect", val email: String) : OutBound()
-
-        data class Start(val type: String = "start") : OutBound()
     }
 
     sealed class InBound: SocketMessage() {
