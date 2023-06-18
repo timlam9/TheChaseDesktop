@@ -11,7 +11,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import domain.models.ChaseBox
 import domain.models.ChaseState
 import domain.models.GameQuestion
 import domain.models.GameQuestionOption
@@ -53,8 +52,8 @@ fun QuestionSection(
             OptionCard(it, showRightAnswer)
         }
         PlayersRow(
-            showPlayer = options.map { it.selectedBy }.contains(PLAYER),
-            showChaser = options.map { it.selectedBy }.contains(CHASER)
+            showPlayer = options.map { it.selectedBy }.contains(PLAYER) || options.map { it.selectedBy }.contains(BOTH),
+            showChaser = options.map { it.selectedBy }.contains(CHASER) || options.map { it.selectedBy }.contains(BOTH)
         )
     }
 }
@@ -67,6 +66,7 @@ fun OptionCard(question: GameQuestionOption, showRightAnswer: Boolean) = with(qu
 
     val borderModifier = when (question.selectedBy) {
         CHASER -> paddingModifier.border(width = 4.dp, color = Color.Red, shape = RoundedCornerShape(4))
+        BOTH -> paddingModifier.border(width = 4.dp, color = Color.Red, shape = RoundedCornerShape(4))
         else -> paddingModifier
     }
 
@@ -76,6 +76,7 @@ fun OptionCard(question: GameQuestionOption, showRightAnswer: Boolean) = with(qu
         backgroundColor = when {
             showRightAnswer && isRightAnswer -> Color.Green
             question.selectedBy == PLAYER -> Color.Blue
+            question.selectedBy == BOTH -> Color.Blue
             else -> MaterialTheme.colors.surface
         }
     ) {
@@ -89,8 +90,10 @@ fun OptionCard(question: GameQuestionOption, showRightAnswer: Boolean) = with(qu
 
 @Composable
 fun PlayersRow(showPlayer: Boolean, showChaser: Boolean) {
-    Row(modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
         AnimatedVisibility(showPlayer) {
             Card(
                 elevation = 2.dp,
