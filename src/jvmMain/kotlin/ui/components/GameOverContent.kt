@@ -1,7 +1,6 @@
 package ui.components
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -42,9 +41,5 @@ fun GameOverContent(gameStatus: GameStatus) {
     ) {
         Spacer(modifier = Modifier.height(160.dp))
         Text(text, style = MaterialTheme.typography.h2.copy(color = color))
-        Spacer(modifier = Modifier.size(40.dp))
-        Button(onClick = {}) {
-            Text("Next round")
-        }
     }
 }
