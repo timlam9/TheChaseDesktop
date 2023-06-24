@@ -3,7 +3,6 @@ package ui
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -23,8 +22,6 @@ fun MainScreen(state: ChaseState) {
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text("The Chase", style = MaterialTheme.typography.h4)
-            Spacer(Modifier.size(20.dp))
             when (state.gameStatus) {
                 GameStatus.PLAYING -> BoardContent(state = state)
                 GameStatus.SETUP -> SetupContent()

@@ -46,7 +46,7 @@ fun QuestionSection(
     modifier: Modifier = Modifier,
 ) = with(question) {
     Column(modifier.fillMaxSize()) {
-        Text(text = title, style = MaterialTheme.typography.h4, modifier = Modifier)
+        Text(text = "$id. $title", style = MaterialTheme.typography.h4, modifier = Modifier)
         Spacer(modifier = Modifier.height(40.dp))
         options.forEach {
             OptionCard(it, showRightAnswer, showPlayerAnswer, showChaserAnswer)
