@@ -10,7 +10,6 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.launch
 
 class MainViewModel(private val dispatcher: CoroutineDispatcher = Dispatchers.IO) {
 
@@ -26,10 +25,7 @@ class MainViewModel(private val dispatcher: CoroutineDispatcher = Dispatchers.IO
     )
 
     init {
-        CoroutineScope(dispatcher).launch {
-            val token = repository.login("board@gmail.com", "password")
-            println("Token = $token")
-        }
+        startWebSocketConnection()
 
         socketEvents.onEach { event ->
             when (event) {
@@ -42,5 +38,12 @@ class MainViewModel(private val dispatcher: CoroutineDispatcher = Dispatchers.IO
                 SocketEvent.RetryingToConnect -> println("Connection retrying")
             }
         }.launchIn(CoroutineScope(dispatcher))
+    }
+
+    fun startWebSocketConnection() {
+        webSocket.startWebSocket()
+    }
+    fun closeWebSocketConnection() {
+        webSocket.closeWebSocket()
     }
 }

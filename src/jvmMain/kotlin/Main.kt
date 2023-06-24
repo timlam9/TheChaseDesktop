@@ -6,8 +6,7 @@ import androidx.compose.ui.input.key.*
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.WindowState
-import androidx.compose.ui.window.singleWindowApplication
+import androidx.compose.ui.window.*
 import ui.MainScreen
 import ui.MainViewModel
 import java.util.*
@@ -23,15 +22,13 @@ fun main() = singleWindowApplication(
     onKeyEvent = {
         if (it.type == KeyEventType.KeyDown && it.isCtrlPressed) {
             when (it.key) {
-                Key.R -> {
+                Key.S -> {
+                    viewModel.startWebSocketConnection()
                     true
                 }
 
                 Key.C -> {
-                    true
-                }
-
-                Key.P -> {
+                    viewModel.closeWebSocketConnection()
                     true
                 }
 

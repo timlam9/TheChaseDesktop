@@ -40,8 +40,9 @@ class WebSocket(
         handleSocketError(exception)
     }
 
-    init {
+    fun startWebSocket() {
         println("Open connection")
+
         CoroutineScope(dispatcher).launch {
             val token = repository.login("board@gmail.com", "password")
             openConnection(token)
@@ -83,6 +84,7 @@ class WebSocket(
     }
 
     fun closeWebSocket() {
+        webSocketSession = null
         client.close()
         println("Connection closed.")
     }
