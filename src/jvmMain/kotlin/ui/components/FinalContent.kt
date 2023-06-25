@@ -11,7 +11,6 @@ import domain.models.ChaseFinal
 import domain.models.ChaseState
 import domain.timer.CoroutinesTimerState
 import ui.theme.ChaseBlue
-import ui.theme.ChaseDarkGray
 import ui.theme.ChaseRed
 
 @Composable
@@ -21,7 +20,7 @@ fun FinalContent(state: ChaseState, timerState: CoroutinesTimerState) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top
     ) {
-        QuestionSection(question = state.currentQuestion, modifier = Modifier.fillMaxWidth())
+        QuestionSection(shouldShowAnswers = false, question = state.currentQuestion, modifier = Modifier.fillMaxWidth())
         FinalTimer(state = state.final, timerState = timerState)
     }
 }
@@ -33,7 +32,10 @@ fun FinalTimer(state: ChaseFinal, timerState: CoroutinesTimerState) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top
     ) {
-        Text(text = "Timer: ${timerState.formattedTime}", style = MaterialTheme.typography.h4, color = ChaseDarkGray)
+        CountDownTimer(
+            progress = timerState.progressPercentage,
+            time = timerState.formattedTime
+        )
         Text(text = "Players points: ${state.playersPoints}", style = MaterialTheme.typography.h4, color = ChaseBlue)
         Text(text = "Chaser points: ${state.chaserPoints}", style = MaterialTheme.typography.h4, color = ChaseRed)
     }

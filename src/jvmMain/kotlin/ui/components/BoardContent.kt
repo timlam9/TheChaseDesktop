@@ -50,14 +50,17 @@ fun Board(
 
 @Composable
 fun QuestionSection(
+    shouldShowAnswers: Boolean = true,
     question: GameQuestion,
     modifier: Modifier = Modifier,
 ) = with(question) {
     Column(modifier.padding(20.dp)) {
         Text(text = "$id. $title", style = MaterialTheme.typography.h4, modifier = Modifier)
         Spacer(modifier = Modifier.height(40.dp))
-        options.forEach {
-            OptionCard(it, showRightAnswer, showPlayerAnswer, showChaserAnswer)
+        if (shouldShowAnswers) {
+            options.forEach {
+                OptionCard(it, showRightAnswer, showPlayerAnswer, showChaserAnswer)
+            }
         }
         PlayersRow(
             showPlayer = options.map { it.selectedBy }.contains(PLAYER) || options.map { it.selectedBy }.contains(BOTH),
