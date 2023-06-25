@@ -4,7 +4,10 @@ import com.google.gson.Gson
 import com.google.gson.JsonParser
 import data.ClientBuilder
 import data.Repository
+import domain.models.ChaseFinal
 import domain.models.ChaseState
+import domain.models.GameQuestion
+import domain.models.GameStatus
 import io.ktor.client.*
 import io.ktor.client.plugins.websocket.*
 import io.ktor.client.request.*
@@ -26,7 +29,28 @@ class WebSocket(
     val socketEvents: Flow<SocketEvent>
         get() = _socketEventChannel.receiveAsFlow().flowOn(dispatcher)
 
-    private var _chaseState = MutableStateFlow(ChaseState())
+    private var _chaseState = MutableStateFlow(
+        ChaseState(
+            board = emptyList(),
+            gameStatus = GameStatus.SETUP,
+            currentQuestion = GameQuestion(
+                id = "",
+                title = "",
+                options = emptyList(),
+                showRightAnswer = false,
+                showPlayerAnswer = false,
+                showChaserAnswer = false
+            ),
+            final = ChaseFinal(
+                timer = 120,
+                startTimer = false,
+                pauseTimer = false,
+                resetTimer = 0,
+                playersPoints = 0,
+                chaserPoints = 0
+            ),
+        )
+    )
     val chaseState = _chaseState.asStateFlow()
 
     private var webSocketSession: DefaultClientWebSocketSession? = null

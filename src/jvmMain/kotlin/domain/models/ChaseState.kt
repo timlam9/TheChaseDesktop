@@ -10,5 +10,13 @@ data class ChaseState(
         showRightAnswer = false,
         showPlayerAnswer = false,
         showChaserAnswer = false
+    ),
+    val final: ChaseFinal = ChaseFinal(
+        timer = 120,
+        startTimer = false,
+        pauseTimer = false,
+        resetTimer = 0,
+        playersPoints = 0,
+        chaserPoints = 0
     )
 )

@@ -28,7 +28,7 @@ fun BoardContent(state: ChaseState) {
         verticalAlignment = Alignment.CenterVertically
     ) {
         Board(state = state)
-        QuestionSection(question = state.currentQuestion)
+        QuestionSection(question = state.currentQuestion, modifier = Modifier.fillMaxSize())
     }
 }
 
@@ -53,7 +53,7 @@ fun QuestionSection(
     question: GameQuestion,
     modifier: Modifier = Modifier,
 ) = with(question) {
-    Column(modifier.fillMaxSize().padding(20.dp)) {
+    Column(modifier.padding(20.dp)) {
         Text(text = "$id. $title", style = MaterialTheme.typography.h4, modifier = Modifier)
         Spacer(modifier = Modifier.height(40.dp))
         options.forEach {

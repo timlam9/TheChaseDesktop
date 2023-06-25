@@ -9,13 +9,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import domain.models.ChaseState
 import domain.models.GameStatus
+import domain.timer.CoroutinesTimerState
 import ui.components.BoardContent
+import ui.components.FinalContent
 import ui.components.GameOverContent
 import ui.components.SetupContent
 
 @Composable
 @Preview
-fun MainScreen(state: ChaseState) {
+fun MainScreen(state: ChaseState, timerState: CoroutinesTimerState) {
     MaterialTheme {
         Column(
             modifier = Modifier.fillMaxSize().padding(20.dp),
@@ -25,7 +27,9 @@ fun MainScreen(state: ChaseState) {
             when (state.gameStatus) {
                 GameStatus.PLAYING -> BoardContent(state = state)
                 GameStatus.SETUP -> SetupContent()
-                else -> GameOverContent(gameStatus = state.gameStatus)
+                GameStatus.CHASER_WIN -> GameOverContent(gameStatus = state.gameStatus)
+                GameStatus.PLAYER_WIN -> GameOverContent(gameStatus = state.gameStatus)
+                GameStatus.FINAL -> FinalContent(state= state, timerState = timerState)
             }
         }
         Spacer(Modifier.size(20.dp))

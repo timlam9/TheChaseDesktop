@@ -41,8 +41,9 @@ fun main() = singleWindowApplication(
 ) {
     Box(modifier = Modifier.size(width = SCREEN_WIDTH, height = SCREEN_HEIGHT)) {
         val state by viewModel.chaseState.collectAsState()
+        val timerState by viewModel.timer.timerStateFlow.collectAsState()
 
-        MainScreen(state = state)
+        MainScreen(state = state, timerState = timerState)
     }
 
     LaunchedEffect(Unit) {
