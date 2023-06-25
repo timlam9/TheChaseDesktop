@@ -110,17 +110,15 @@ class WebSocket(
 
             val type = when (jsonObject.get("type").asString) {
                 "state" -> SocketMessage.InBound.State::class.java
-                else -> SocketMessage::class.java
+                else -> SocketMessage.InBound::class.java
             }
 
-            val payload: SocketMessage = gson.fromJson(receivedText, type)
+            val payload: SocketMessage.InBound = gson.fromJson(receivedText, type)
             println("- - - - - - - - - - > Message received: $payload")
 
             when (payload) {
                 is SocketMessage.InBound.SocketError -> TODO()
                 is SocketMessage.InBound.State -> _chaseState.update { payload.chaseState }
-                is SocketMessage.OutBound.Connect -> TODO()
-                is SocketMessage.OutBound.Disconnect -> TODO()
             }
         } catch (e: Exception) {
             println("- - - - - - - - - - > Message decode exception: ${e.localizedMessage}")

@@ -16,6 +16,9 @@ import domain.models.ChaseState
 import domain.models.GameQuestion
 import domain.models.GameQuestionOption
 import domain.models.GameQuestionOption.SelectedBy.*
+import ui.theme.ChaseBlue
+import ui.theme.ChaseGreen
+import ui.theme.ChaseRed
 
 @Composable
 fun BoardContent(state: ChaseState) {
@@ -50,7 +53,7 @@ fun QuestionSection(
     question: GameQuestion,
     modifier: Modifier = Modifier,
 ) = with(question) {
-    Column(modifier.fillMaxSize().padding(top = 20.dp)) {
+    Column(modifier.fillMaxSize().padding(20.dp)) {
         Text(text = "$id. $title", style = MaterialTheme.typography.h4, modifier = Modifier)
         Spacer(modifier = Modifier.height(40.dp))
         options.forEach {
@@ -70,22 +73,20 @@ fun OptionCard(
     showPlayerAnswer: Boolean,
     showChaserAnswer: Boolean
 ) = with(question) {
-    println("BUG: $question")
-
     val paddingModifier = Modifier
         .fillMaxWidth()
-        .padding(horizontal = 20.dp, vertical = 6.dp)
+        .padding(vertical = 6.dp)
 
     val borderModifier = when {
         (question.selectedBy == CHASER) && showChaserAnswer -> paddingModifier.border(
             width = 4.dp,
-            color = Color.Red,
+            color = ChaseRed,
             shape = RoundedCornerShape(4)
         )
 
         (question.selectedBy == BOTH) && showChaserAnswer -> paddingModifier.border(
             width = 4.dp,
-            color = Color.Red,
+            color = ChaseRed,
             shape = RoundedCornerShape(4)
         )
 
@@ -96,16 +97,16 @@ fun OptionCard(
         elevation = 2.dp,
         modifier = borderModifier,
         backgroundColor = when {
-            showRightAnswer && isRightAnswer -> Color.Green
-            (question.selectedBy == PLAYER) && showPlayerAnswer -> Color.Blue
-            (question.selectedBy == BOTH) && showPlayerAnswer -> Color.Blue
+            showRightAnswer && isRightAnswer -> ChaseGreen
+            (question.selectedBy == PLAYER) && showPlayerAnswer -> ChaseBlue
+            (question.selectedBy == BOTH) && showPlayerAnswer -> ChaseBlue
             else -> MaterialTheme.colors.surface
         }
     ) {
         Text(
             text = "${position.name}. $title",
             modifier = Modifier.padding(30.dp),
-            style = MaterialTheme.typography.h5
+            style = MaterialTheme.typography.h5,
         )
     }
 }
@@ -120,12 +121,13 @@ fun PlayersRow(showPlayer: Boolean, showChaser: Boolean) {
             Card(
                 elevation = 2.dp,
                 modifier = Modifier.padding(8.dp),
-                backgroundColor = Color.Blue
+                backgroundColor = ChaseBlue
             ) {
                 Text(
                     text = "Player",
                     modifier = Modifier.padding(30.dp),
-                    style = MaterialTheme.typography.h5
+                    style = MaterialTheme.typography.h5,
+                    color = Color.White
                 )
             }
         }
@@ -133,12 +135,13 @@ fun PlayersRow(showPlayer: Boolean, showChaser: Boolean) {
             Card(
                 elevation = 2.dp,
                 modifier = Modifier.padding(8.dp),
-                backgroundColor = Color.Red
+                backgroundColor = ChaseRed
             ) {
                 Text(
                     text = "Chaser",
                     modifier = Modifier.padding(30.dp),
-                    style = MaterialTheme.typography.h5
+                    style = MaterialTheme.typography.h5,
+                    color = Color.White
                 )
             }
         }

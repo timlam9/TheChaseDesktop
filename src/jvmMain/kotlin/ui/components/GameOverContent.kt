@@ -9,9 +9,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import domain.models.GameStatus
+import ui.theme.ChaseBlue
+import ui.theme.ChaseDarkGray
+import ui.theme.ChaseRed
 
 @Composable
 fun GameOverContent(gameStatus: GameStatus) {
@@ -28,9 +30,9 @@ fun GameOverContent(gameStatus: GameStatus) {
     val color by remember(gameStatus) {
         mutableStateOf(
             when (gameStatus) {
-                GameStatus.CHASER_WIN -> Color.Red
-                GameStatus.PLAYER_WIN -> Color.Blue
-                else -> Color.Black
+                GameStatus.CHASER_WIN -> ChaseRed
+                GameStatus.PLAYER_WIN -> ChaseBlue
+                else -> ChaseDarkGray
             }
         )
     }

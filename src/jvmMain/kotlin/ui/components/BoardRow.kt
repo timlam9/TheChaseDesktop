@@ -19,6 +19,9 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import domain.models.ChaseBox.RowType
+import ui.theme.ChaseBlue
+import ui.theme.ChaseGray
+import ui.theme.ChaseRed
 
 private const val STROKE = 8f
 
@@ -57,11 +60,11 @@ fun BoardRow(
                 path.close()
 
                 val fillColor = when (type) {
-                    RowType.CHASER -> Color.Red
-                    RowType.CHASER_HEAD -> Color.Red
-                    RowType.PLAYER -> Color.Blue
-                    RowType.PLAYER_HEAD -> Color.Blue
-                    RowType.EMPTY -> Color.Gray
+                    RowType.CHASER -> ChaseRed
+                    RowType.CHASER_HEAD -> ChaseRed
+                    RowType.PLAYER -> ChaseBlue
+                    RowType.PLAYER_HEAD -> ChaseBlue
+                    RowType.EMPTY -> ChaseGray
                     RowType.BANK -> Color.Black
                 }
 
